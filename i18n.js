@@ -455,7 +455,11 @@ i18n.prototype = {
 	locateFile: function (locale) {
 		return path.normalize(this.directory + '/' + locale + this.extension);
 	},
-
+	
+	clearCache: function () {
+		this.localeCache = {}
+	},
+	
 	initLocale: function (locale, data) {
 		if (!this.locales[locale]) {
 			this.locales[locale] = data;
