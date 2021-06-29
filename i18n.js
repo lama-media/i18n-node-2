@@ -342,6 +342,29 @@ i18n.prototype = {
 
 		return dotNotation(this.locales[locale], singular, plural ? { one: singular, other: plural } : undefined);
 	},
+	
+	// read locale file, translate a msg and write to fs if new
+	translate2: function (locale, singular, translated) {
+		if (!locale || !this.locales[locale]) {
+			if (this.devMode) {
+				debugWarn("WARN: No locale found. Using the default (" +
+					this.defaultLocale + ") as current locale");
+			}
+			
+			locale = this.defaultLocale;
+			
+			this.initLocale(locale, {});
+		}
+		
+		if (!this.locales[locale][singular]) {
+			if (this.devMode) {
+				dotNotation(this.locales[locale], singular, translated);
+				this.writeFile(locale);
+			}
+		}
+		
+		return dotNotation(this.locales[locale], singular, undefined);
+	},
 
 	// try reading a file
 	readFile: function (locale) {
