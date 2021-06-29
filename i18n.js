@@ -356,11 +356,9 @@ i18n.prototype = {
 			this.initLocale(locale, {});
 		}
 		
-		if (!this.locales[locale][singular]) {
-			if (this.devMode) {
-				dotNotation(this.locales[locale], singular, translated);
-				this.writeFile(locale);
-			}
+		if (this.devMode) {
+			this.locales[locale][singular] = translated;
+			this.writeFile(locale);
 		}
 		
 		return dotNotation(this.locales[locale], singular, undefined);
